@@ -21,6 +21,13 @@ void parse_user_input(char* input, unsigned int* credit);
 void launch_roulette(unsigned int *credit, int* mise);
 
 /**
+ * @brief print roulette 
+ * @param credit the user credit
+ * @param mise the user mise
+ **/
+void print_roulette(char* line[], bool win, int gain, int* mise, unsigned int* credit);
+
+/**
  * @brief return a random symbole 
  * @return a random symbole
  **/
