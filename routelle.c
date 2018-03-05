@@ -6,7 +6,11 @@
 #include <unistd.h>
 #include "routelle.h"
 
+/** TODO: 
+ * Changer l'UI, le rendre plus intuitif.
+ **/
 #define SIZE_BUFFER 10
+bool gived_free_credit = false;
 
 int main(int argc, char* arv[]){
     srand(time(NULL));
@@ -18,10 +22,8 @@ int main(int argc, char* arv[]){
         exit(EXIT_FAILURE);
     }
 
-    printf("+-+-+-+-+-+-+-+-+\n|R|O|U|T|E|L|L|E|\n+-+-+-+-+-+-+-+-+  by Dysta\n");
-    printf("Faites !c pour obtenir 200 credits\n");
-    printf("Faites !p <mise> pour jouer votre mise, mise par défaut = 5\n");
-    printf("Faites !h pour afficher l'aide\n\n");           
+    printf("+-+-+-+-+-+-+-+-+\n|R|O|U|T|E|L|L|E|\n+-+-+-+-+-+-+-+-+\n");
+    printf("Faites !h pour afficher l'aide\n\n");
     do{
         get_user_input(input);
         parse_user_input(input, &credit);
@@ -47,7 +49,10 @@ void parse_user_input(char* input, unsigned int* credit){
         int mise = 0;
         switch(input[1]){
             case 'c': // add some credit
-                *credit += 200;
+                if(!gived_free_credit){
+                    *credit += 200;
+                    gived_free_credit = true;
+                }
                 break; 
             case 'p': // play her credit
                 tok = strtok(input, " "); // get out the !p
@@ -68,7 +73,9 @@ void parse_user_input(char* input, unsigned int* credit){
                 launch_roulette(credit, &mise);
                 break;
             case 'h': // some help for player
-                 break;
+                printf("Faites !c pour obtenir 200 credits\n");
+                printf("Faites !p <mise> pour jouer votre mise, mise par défaut = 5\n");
+                break;
         }
     }
 }
@@ -76,7 +83,7 @@ void parse_user_input(char* input, unsigned int* credit){
 void launch_roulette(unsigned int* credit, int* mise){
     bool win = false;
     int gain = 0;
-    char* line[] = { random_symbole(), random_symbole(), random_symbole() };
+    char line[] = { random_symbole(), random_symbole(), random_symbole() };
 
 
     for(int i = 0; i < 2; i++ ){
@@ -93,13 +100,13 @@ void launch_roulette(unsigned int* credit, int* mise){
     line[2] = random_symbole();
 
     // two identical symbols
-    if(strcmp(line[0], line[1]) == 0 || strcmp(line[0], line[2]) == 0 || strcmp(line[1], line[2]) == 0){
+    if(line[0] == line[1]  || line[0] == line[2] || line[1] == line[2]){
         gain = *mise * 3 + *mise; 
         win = true;
     }
     
     // all identical symbols
-    if(strcmp(line[0], line[1]) == 0 && strcmp(line[0], line[2]) == 0 && strcmp(line[1], line[2]) == 0){
+    if(line[0] == line[1] && line[0] == line[2] && line[1] == line[2]){
         gain = *mise * 5 + *mise;
         win = true;
     }
@@ -108,12 +115,12 @@ void launch_roulette(unsigned int* credit, int* mise){
     print_roulette(line, win, gain, mise, credit);
 }
 
-void print_roulette(char* line[], bool win, int gain, int* mise, unsigned int* credit){
+void print_roulette(char line[], bool win, int gain, int* mise, unsigned int* credit){
     printf("[:: ROUTELLE ::]\n");
     printf("----------------\n");
-    printf("|  %s   %s   %s   |  \n", random_symbole(), random_symbole(), random_symbole());
-    printf("|  %s   %s   %s   |<<  \n", line[0], line[1], line[2]);
-    printf("|  %s   %s   %s   |  \n", random_symbole(), random_symbole(), random_symbole());
+    printf("|  %c   %c   %c   |  \n", random_symbole(), random_symbole(), random_symbole());
+    printf("|  %c   %c   %c   |<<  \n", line[0], line[1], line[2]);
+    printf("|  %c   %c   %c   |  \n", random_symbole(), random_symbole(), random_symbole());
     printf("----------------\n");
     if(win)
         printf("|::   WIN    ::|\n");
@@ -125,25 +132,9 @@ void print_roulette(char* line[], bool win, int gain, int* mise, unsigned int* c
     printf("----------------\n");
 }
 
-char* random_symbole(){
-    switch(random(0, 15)){
-        case 0: return "🔵";
-        case 1: return "⭕";
-        case 2: return "🍎";
-        case 3: return "🍏";
-        case 4: return "🍊";
-        case 5: return "🍒";
-        case 6: return "🍋";
-        case 7: return "🍇";
-        case 8: return "🍓";
-        case 9: return "💎";
-        case 10: return "🍄";
-        case 11: return "❌";
-        case 12: return "👑";
-        case 13: return "🌰";
-        case 14: return "🌺";
-        default: return "🍌";
-    }
+char random_symbole(){
+    char symbol[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+    return symbol[random(0,15)];
 }
 
 void clear(char* str){

@@ -25,13 +25,13 @@ void launch_roulette(unsigned int *credit, int* mise);
  * @param credit the user credit
  * @param mise the user mise
  **/
-void print_roulette(char* line[], bool win, int gain, int* mise, unsigned int* credit);
+void print_roulette(char line[], bool win, int gain, int* mise, unsigned int* credit);
 
 /**
  * @brief return a random symbole 
  * @return a random symbole
  **/
-char* random_symbole(void);
+char random_symbole(void);
 
 /**
  * @brief clear the stdinput from a previous input or erase \n from a string
