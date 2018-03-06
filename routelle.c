@@ -25,6 +25,7 @@ int main(int argc, char* arv[]){
     printf("+-+-+-+-+-+-+-+-+\n|R|O|U|T|E|L|L|E|\n+-+-+-+-+-+-+-+-+\n");
     printf("Faites !h pour afficher l'aide\n\n");
     do{
+        printf("Vous avez %d crédits\n", credit);
         get_user_input(input);
         parse_user_input(input, &credit);
         //printf("\033[2J"); // clear the terminal
@@ -91,7 +92,7 @@ void launch_roulette(unsigned int* credit, int* mise){
 
 
     for(int i = 0; i < 2; i++ ){
-        print_roulette(line, random(0,1), gain, mise, credit);
+        print_roulette(line, irandom(0,1), gain, mise, credit);
         printf("\033[11A"); // Move up 11 lines;
         line[0] = random_symbole();
         line[1] = random_symbole();
@@ -138,7 +139,7 @@ void print_roulette(char line[], bool win, int gain, int* mise, unsigned int* cr
 
 char random_symbole(){
     char symbol[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-    return symbol[random(0,15)];
+    return symbol[irandom(0,15)];
 }
 
 void clear(char* str){
@@ -153,7 +154,7 @@ void clear(char* str){
     }
 }
 
-int random(int a, int b){
+int irandom(int a, int b){
     b++; // we include b into the interval
     if(a < b)
         return rand()%(b-a) + a;

@@ -45,5 +45,5 @@ void clear(char* str);
  * @param b maximum number included of intervals
  * @return random value between a and b
  **/
-int random(int a, int b);
+int irandom(int a, int b);
 #endif
