@@ -31,6 +31,7 @@ int main(int argc, char* arv[]){
     }while(credit > 0);
 
     printf("Vous n'avez plus de crédit !\n");
+    sleep(3);
 
     free(input);
     return EXIT_SUCCESS;
@@ -129,9 +130,9 @@ void print_roulette(char line[], bool win, int gain, int* mise, unsigned int* cr
         printf("|::   WIN    ::|\n");
     else
         printf("|::   LOST   ::|\n");
-    printf("|: CRDT :%4d :|\n", *credit);
-    printf("|: MISE :%4d :|\n", *mise);
-    printf("|: GAIN :%4d :|\n", (gain == 0) ? gain : gain - *mise);
+    printf("|: CRDT : %4d:|\n", *credit);
+    printf("|: MISE : %4d:|\n", *mise);
+    printf("|: GAIN : %4d:|\n", (gain == 0) ? gain : gain - *mise);
     printf("----------------\n");
 }
 
