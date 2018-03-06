@@ -52,6 +52,9 @@ void parse_user_input(char* input, unsigned int* credit){
                 if(!gived_free_credit){
                     *credit += 200;
                     gived_free_credit = true;
+                    printf("Vous avez reçu 200 credits \n");
+                } else {
+                    printf("Vous avez deja recu vos credits gratuit\n");
                 }
                 break; 
             case 'p': // play her credit
