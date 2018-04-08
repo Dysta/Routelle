@@ -6,9 +6,9 @@ Clonez le repos git et compilez le fichier **routelle.c**.
 
 ## Commandes
 
-> !h // affiche l'aide
-> !c // donne 200 de crédit
-> !p \<mise> // lance la roulette avec la mise donné. mise par défaut de 5
+> !h // affiche l'aide <br>
+> !c // donne 200 de crédit <br>
+> !p \<mise> // lance la roulette avec la mise donné. mise par défaut de 5 <br>
 
 
 ___
